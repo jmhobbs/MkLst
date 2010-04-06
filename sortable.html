@@ -1,0 +1,125 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title>MkLst - Printable List Creator</title>
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.0/jquery-ui.min.js"></script>
+		<link rel='stylesheet' href='styles.css' type='text/css' media='all' />
+		<script type="text/javascript">
+
+			var MkLst = {
+
+				list: null,
+				edit_current: null,
+				sorting: false,
+				save_pending: false,
+				saved: true,
+
+				init:
+					function () {
+						window.onbeforeunload = function() {
+							if( ! MkList.saved ) {
+								MkLst.save_pending = true;
+								return "Your list has unsaved changes!";
+							}
+							return true;
+						}
+						MkLst.list = $( "#list" );
+						MkLst.list.sortable( { start: function () { MkLst.sorting = true; } } );
+						$( ".add" ).click( MkLst.createListItem );
+						$( ".list-item" ).click( MkLst.editListItem );
+					},
+
+				editListItem:
+					function () {
+						if( MkLst.edit_current != null ) { MkLst.edit_current.trigger( 'blur' ); }
+						if( MkLst.sorting ) { MkLst.sorting = false; return; }
+						MkLst.edit_current = $( '<input type="text" />' );
+						li = $( this )
+						MkLst.edit_current.val( li.text() )
+						li.addClass( 'active' ).empty().append( MkLst.edit_current ).unbind( 'click' );
+						MkLst.edit_current.focus().blur( MkLst.saveListItem ).keypress( MkLst.editKeyPress );
+					},
+
+				editKeyPress:
+					function ( event ) {
+						if( MkLst.edit_current == null ) { return; }
+						if( event.keyCode == '13' || event.keyCode == '27' )
+							MkLst.edit_current.trigger( 'blur' );
+					},
+
+				saveListItem:
+					function () {
+						if( MkLst.edit_current == null ) { return; }
+						content = MkLst.edit_current.val()
+						if( content == "" )
+							MkLst.edit_current.parent().remove();
+						else
+							MkLst.edit_current.parent().removeClass( 'active' ).empty().text( content ).click( MkLst.editListItem );
+						MkLst.edit_current = null
+					},
+
+				createListItem:
+					function () {
+						li = $( '<li class="list-item"></li>' ).click( MkLst.editListItem );
+						MkLst.list.append( li );
+						li.trigger( 'click' );
+					},
+
+			} // MkLst
+
+			$( MkLst.init );
+		</script>
+		<style type="text/css" media="screen,print">
+			h1 {
+				border-bottom: 2px solid #CCC;
+			}
+			ol {
+				margin: 25px 20px;
+				padding: 10px;
+			}
+			li {
+				border-bottom: 1px solid #CCC;
+				padding: 5px 3px;
+				margin: 2px;
+				cursor: pointer;
+			}
+		</style>
+		<style type="text/css" media="screen">
+			li.ui-sortable-helper {
+				list-style: none;
+			}
+			li.active {
+				background: #FCC;
+			}
+			.buttons {
+				padding: 5px 3px;
+				border: 1px solid #777;
+				background-color: #CCC;
+			}
+			.notify {
+				color: #777;
+			}
+		</style>
+		<style type="text/css" media="print">
+			.buttons { display: none; }
+		</style>
+	</head>
+	<body>
+		<h1>MkLst: <span id="name">Name</span></h2>
+		<div class="buttons">
+			<button class="add">Add Item +</button>
+			<button class="save">Save</button>
+			<span class="notify"></span>
+		</div>
+		<ol id="list">
+			<li class="list-item">Example Item</li>
+		</ol>
+		<div class="buttons">
+			<button class="add">Add Item +</button>
+			<button class="save">Save</button>
+			<span class="notify"></span>
+		</div>
+	</body>
+</html>
