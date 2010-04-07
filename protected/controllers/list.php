@@ -5,8 +5,23 @@
 		
 		public function index () { header( 'Location: /mklst/' ); exit(); }
 		
-		public function view ( $id ) {
-			$this->view->content = $view = new View( 'list/view' );
+		public function view ( $id, $try_edit = false ) {
+			$list = Alist::constructByKey( $id );
+			if ( ! is_object( $list ) ) {
+				$this->view->content = new View( 'list/missing' );
+				//! \todo Ban counter
+				return;
+			}
+			
+			$view = new View( 'list/view' );
+			$view->alist = $list;
+			
+			if( $try_edit ) {
+				$this->view->edit = true;
+				$view->edit = true;
+			}
+			
+			$this->view->content = $view;
 		}
 		
 		public function create () {
@@ -36,10 +51,10 @@
 				}
 			}
 		
-			$this->view->content = $view = new View( 'list/create' );
+			$this->view->content = new View( 'list/create' );
 		}
 		
 		public function edit ( $id ) {
-			$this->view->content = $view = new View( 'list/edit' );
+			$this->view( $id, true );
 		}
 	}

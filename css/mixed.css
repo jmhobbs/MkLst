@@ -1,0 +1,13 @@
+h1 {
+	border-bottom: 2px solid #CCC;
+}
+ol {
+	margin: 25px 20px;
+	padding: 10px;
+}
+li {
+	border-bottom: 1px solid #CCC;
+	padding: 5px 3px;
+	margin: 2px;
+	cursor: pointer;
+}

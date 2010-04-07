@@ -18,3 +18,18 @@ input {
 	border: 1px solid #000;
 	background-color: #CCC;
 }
+
+li.ui-sortable-helper {
+	list-style: none;
+}
+li.active {
+	background: #FCC;
+}
+.buttons {
+	padding: 5px 3px;
+	border: 1px solid #777;
+	background-color: #CCC;
+}
+.notify {
+	color: #777;
+}
