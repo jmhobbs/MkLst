@@ -1,7 +1,7 @@
 RewriteEngine On
 RewriteBase /mklst/
 
-RewriteRule ^(controllers|models|vendors|views|config.php) - [F,L]
+RewriteRule ^protected - [F,L]
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule .* index.php/$0 [PT,L]

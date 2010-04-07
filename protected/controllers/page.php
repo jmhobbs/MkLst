@@ -1,6 +1,6 @@
 <?php
 
-	class Page {
+	class Page_Controller {
 
 		function index () {
 			print "Hello World!";

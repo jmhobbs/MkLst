@@ -1,5 +1,6 @@
 <?php
-	require_once( 'config.php' );
+	require_once( 'protected/config.php' );
+	require_once( 'protected/system/database.php' );
 
 	// Parse URI
 	if( false === strpos( $_SERVER['REQUEST_URI'], $config['uri_prefix'] ) )
@@ -12,26 +13,29 @@
 		if( empty( $components[$i] ) )
 			unset( $components[$i] );
 
-	$controller = $config['default_controller'];
-	$method = 'index';
+	$controller_name = $config['default_controller'];
+	$method_name = 'index';
 	$arguments = array();
 
-	if( 1 <= count( $components ) ) { $controller = strtolower( $components[0] ); }
-	if( 2 <= count( $components ) ) { $method = strtolower( $components[1] ); }
+	if( 1 <= count( $components ) ) { $controller_name = strtolower( $components[0] ); }
+	if( 2 <= count( $components ) ) { $method_name = strtolower( $components[1] ); }
 	if( 3 <= count( $components ) ) { $arguments = array_slice( $components, 2 ); }
 
-	if( ! file_exists( 'controllers/' . $controller . '.php' ) )
-		die( "Bad Controller: $controller" );
+	$controller_file = 'protected/controllers/' . $controller_name . '.php';
+	$controller_class =  $controller_name . '_Controller';
 
-	require_once( 'controllers/' . $controller . '.php' );
+	if( ! file_exists( $controller_file ) )
+		die( "Bad Controller: $controller_name" );
 
-	if( ! class_exists( $controller ) )
-		die( "Bad Controller: $controller" );
+	require_once( $controller_file );
 
-	$controller_obj = new $controller();
+	if( ! class_exists( $controller_class ) )
+		die( "Bad Controller: $controller_name" );
 
-	if( ! method_exists( $controller_obj, $method ) )
-		die( "Bad Method for $controller: $method" );
+	$controller_obj = new $controller_class();
 
-	if( false === call_user_func_array( array( &$controller_obj, $method ), $arguments ) )
-		die( "Error Calling Method for $controller: $method" );
+	if( ! method_exists( $controller_obj, $method_name ) )
+		die( "Bad Method for $controller_name: $method_name" );
+
+	if( false === call_user_func_array( array( &$controller_obj, $method_name ), $arguments ) )
+		die( "Error Calling Method for $controller_name: $method_name" );
