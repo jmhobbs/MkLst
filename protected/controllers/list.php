@@ -19,6 +19,8 @@
 				return;
 			}
 			
+			$this->view->title = 'MkLst - ' . $list->getName();
+			
 			$view = new View( 'list/view' );
 			
 			if( $try_edit ) {

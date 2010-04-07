@@ -1,9 +1,16 @@
-<h1>MkLst: <span id="name"><?php echo $alist->getName(); ?></span></h2>
+<h1>
+	<span id="name"><?php echo $alist->getName(); ?></span>
+	<?php if( ! $edit ): ?>
+	<span class="context-link">(<a href="<?php echo uri::path( 'list/edit/' . $alist->getId() ); ?>">Edit</a>)</span>
+	<?php else: ?>
+	<span class="context-link">(<a href="<?php echo uri::path( 'list/view/' . $alist->getId() ); ?>">View</a>)</span>
+	<?php endif; ?>
+</h1>
+
 <?php if( $edit ): ?>
 <div class="buttons">
 	<button class="add">Add Item +</button>
 	<button class="save">Save</button>
-	<span class="notify"></span>
 </div>
 <?php endif; ?>
 
@@ -20,7 +27,6 @@
 <div class="buttons">
 	<button class="add">Add Item +</button>
 	<button class="save">Save</button>
-	<span class="notify"></span>
 </div>
 
 <form id="edit-form" method="POST"><input type="hidden" name="list-value" id="list-value" value="" /></form>

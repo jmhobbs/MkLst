@@ -33,3 +33,10 @@ li.active {
 .notify {
 	color: #777;
 }
+
+.context-link {
+	font-size: 10px;
+}
+.context-link a {
+	text-decoration: none;
+}
