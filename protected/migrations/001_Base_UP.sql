@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS `list` (
+CREATE TABLE IF NOT EXISTS `alist` (
   `id` varchar(255)  NOT NULL,
   `name` varchar(255)  NOT NULL,
   `email` varchar(255)  NOT NULL,

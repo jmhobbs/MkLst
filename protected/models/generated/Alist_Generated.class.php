@@ -1,15 +1,15 @@
 <?php
 
 /**
- * This is the base class for List.
+ * This is the base class for Alist.
  * 
- * @see List, CoughObject
+ * @see Alist, CoughObject
  **/
-abstract class List_Generated extends CoughObject {
+abstract class Alist_Generated extends CoughObject {
 	
 	protected static $db = null;
 	protected static $dbName = 'mklst';
-	protected static $tableName = 'list';
+	protected static $tableName = 'alist';
 	protected static $pkFieldNames = array('id');
 	
 	protected $fields = array(
@@ -65,28 +65,28 @@ abstract class List_Generated extends CoughObject {
 	// Static Definition Methods
 	
 	public static function getDb() {
-		if (is_null(List::$db)) {
-			List::$db = CoughDatabaseFactory::getDatabase(List::$dbName);
+		if (is_null(Alist::$db)) {
+			Alist::$db = CoughDatabaseFactory::getDatabase(Alist::$dbName);
 		}
-		return List::$db;
+		return Alist::$db;
 	}
 	
 	public static function getDbName() {
-		return CoughDatabaseFactory::getDatabaseName(List::$dbName);
+		return CoughDatabaseFactory::getDatabaseName(Alist::$dbName);
 	}
 	
 	public static function getTableName() {
-		return List::$tableName;
+		return Alist::$tableName;
 	}
 	
 	public static function getPkFieldNames() {
-		return List::$pkFieldNames;
+		return Alist::$pkFieldNames;
 	}
 	
 	// Static Construction (factory) Methods
 	
 	/**
-	 * Constructs a new List object from
+	 * Constructs a new Alist object from
 	 * a single id (for single key PKs) or a hash of [field_name] => [field_value].
 	 * 
 	 * The key is used to pull data from the database, and, if no data is found,
@@ -95,43 +95,43 @@ abstract class List_Generated extends CoughObject {
 	 * field, you may pass its value in directly without using a hash.
 	 * 
 	 * @param mixed $idOrHash - id or hash of [field_name] => [field_value]
-	 * @return mixed - List or null if no record found.
+	 * @return mixed - Alist or null if no record found.
 	 **/
 	public static function constructByKey($idOrHash, $forPhp5Strict = '') {
-		return CoughObject::constructByKey($idOrHash, 'List');
+		return CoughObject::constructByKey($idOrHash, 'Alist');
 	}
 	
 	/**
-	 * Constructs a new List object from custom SQL.
+	 * Constructs a new Alist object from custom SQL.
 	 * 
 	 * @param string $sql
-	 * @return mixed - List or null if exactly one record could not be found.
+	 * @return mixed - Alist or null if exactly one record could not be found.
 	 **/
 	public static function constructBySql($sql, $forPhp5Strict = '') {
-		return CoughObject::constructBySql($sql, 'List');
+		return CoughObject::constructBySql($sql, 'Alist');
 	}
 	
 	/**
-	 * Constructs a new List object after
+	 * Constructs a new Alist object after
 	 * checking the fields array to make sure the appropriate subclass is
 	 * used.
 	 * 
 	 * No queries are run against the database.
 	 * 
 	 * @param array $hash - hash of [field_name] => [field_value] pairs
-	 * @return List
+	 * @return Alist
 	 **/
 	public static function constructByFields($hash) {
-		return new List($hash);
+		return new Alist($hash);
 	}
 	
 	public static function getLoadSql() {
-		$tableName = List::getTableName();
+		$tableName = Alist::getTableName();
 		return '
 			SELECT
 				`' . $tableName . '`.*
 			FROM
-				`' . List::getDbName() . '`.`' . $tableName . '`
+				`' . Alist::getDbName() . '`.`' . $tableName . '`
 		';
 	}
 	

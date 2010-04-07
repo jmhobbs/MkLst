@@ -1,0 +1,20 @@
+label {
+	display: inline-block;
+	width: 150px;
+	text-align: right;
+	margin-right: 10px;
+}
+
+.label-offset {
+	margin-left: 160px;
+}
+
+input {
+	margin: 5px 0;
+}
+
+.flash {
+	padding: 10px;
+	border: 1px solid #000;
+	background-color: #CCC;
+}
