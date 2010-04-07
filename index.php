@@ -1,4 +1,5 @@
 <?php
+	session_start();
 	define( 'APP_ROOT', dirname( __FILE__ ) . '/protected' );
 
 	// Get CoughPHP

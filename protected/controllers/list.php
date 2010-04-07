@@ -17,8 +17,15 @@
 			$view->alist = $list;
 			
 			if( $try_edit ) {
-				$this->view->edit = true;
-				$view->edit = true;
+				$password = $list->getPassphrase();
+				if( ! empty( $password ) && $_SESSION['can_edit'] != $id ) {
+					header( 'Location: /mklst/list/password/' . $id );
+					exit();
+				}
+				else {
+					$this->view->edit = true;
+					$view->edit = true;
+				}
 			}
 			
 			$this->view->content = $view;
@@ -56,5 +63,28 @@
 		
 		public function edit ( $id ) {
 			$this->view( $id, true );
+		}
+		
+		public function password ( $id ) {
+		
+			$list = Alist::constructByKey( $id );
+			if ( ! is_object( $list ) ) {
+				$this->view->content = new View( 'list/missing' );
+				//! \todo Ban counter
+				return;
+			}
+		
+			if( $_POST ) {
+				if( $_POST['password'] == $list->getPassphrase() ) {
+					$_SESSION['can_edit'] = $list->getId();
+					header( 'Location: /mklst/list/edit/' . $id );
+					exit();
+				}
+				else {
+					$this->view->flash = 'Sorry, that\'s not the password.';
+					//! \todo Ban counter
+				}
+			}
+			$this->view->content = new View( 'list/password' );
 		}
 	}
