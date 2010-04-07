@@ -1,9 +1,9 @@
 <html>
 	<head>
 		<title><?php echo $title; ?></title>
-		<link rel="stylesheet" media="screen" href="<?php echo uri::path( 'css/screen.css' ); ?>" />
-		<link rel="stylesheet" media="screen,print" href="<?php echo uri::path( 'css/mixed.css' ); ?>" />
-		<link rel="stylesheet" media="print" href="/mklst/css/print.css" />
+		<link rel="stylesheet" type="text/css" media="screen" href="<?php echo uri::path( 'css/screen.css' ); ?>" />
+		<link rel="stylesheet" type="text/css" media="screen,print" href="<?php echo uri::path( 'css/mixed.css' ); ?>" />
+		<link rel="stylesheet" type="text/css" media="print" href="<?php echo uri::path( 'css/print.css' ); ?>" />
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.0/jquery-ui.min.js"></script>
 		<?php if ( $edit ) : ?>
