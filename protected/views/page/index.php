@@ -9,7 +9,7 @@
 </p>
 
 <p>
-	<form action="list/create">
+	<form action="<?php echo uri::path( 'list/create' ); ?>">
 		<button>New List +</button>
 	</form>
 </p>
