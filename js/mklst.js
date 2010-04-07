@@ -19,7 +19,6 @@ var MkLst = {
 			$( ".add" ).click( MkLst.createListItem );
 			$( ".list-item" ).click( MkLst.editListItem );
 			$( ".save" ).click( MkLst.saveList );
-			$( ".close" ).click( MkLst.closeList );
 		},
 
 	editListItem:
@@ -61,6 +60,7 @@ var MkLst = {
 		
 	saveList:
 		function () {
+			$( '.save,.add' ).attr( 'disabled', 'disabled' )
 			if( MkLst.edit_current != null ) { MkLst.edit_current.trigger( 'blur' ); }
 			form = $( '#edit-form' );
 			list = $( '#list-value' );

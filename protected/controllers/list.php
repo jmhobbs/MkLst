@@ -9,7 +9,7 @@
 				$_SESSION['can_edit'] = array();
 		}
 		
-		public function index () { header( 'Location: /mklst/' ); exit(); }
+		public function index () { uri::redirect( '' ); }
 		
 		public function view ( $id, $try_edit = false ) {
 			$list = Alist::constructByKey( $id );
@@ -24,8 +24,7 @@
 			if( $try_edit ) {
 				$password = $list->getPassphrase();
 				if( ! empty( $password ) && ! array_key_exists( $id, $_SESSION['can_edit'] ) ) {
-					header( 'Location: /mklst/list/password/' . $id );
-					exit();
+					uri::redirect( 'list/password/' . $id );
 				}
 				else {
 					$this->view->edit = true;
@@ -68,8 +67,7 @@
 					$list->setList( serialize( array() )  );
 					if( $list->save() ) {
 						$_SESSION['can_edit'][$list->getId()] = true;
-						header( 'Location: /mklst/list/edit/' . $list->getId() );
-						exit();
+						uri::redirect( 'list/edit/' . $list->getId() );
 					}
 					else {
 						$this->view->flash = "Error saving list!";
@@ -94,15 +92,13 @@
 			}
 		
 			if( array_key_exists( $id, $_SESSION['can_edit'] ) ) {
-				header( 'Location: /mklst/list/edit/' . $id );
-				exit();
+				uri::redirect( 'list/edit/' . $id );
 			}
 		
 			if( $_POST ) {
 				if( $_POST['password'] == $list->getPassphrase() ) {
 					$_SESSION['can_edit'][$list->getId()] = true;
-					header( 'Location: /mklst/list/edit/' . $id );
-					exit();
+					uri::redirect( 'list/edit/' . $id );
 				}
 				else {
 					$this->view->flash = 'Sorry, that\'s not the password.';

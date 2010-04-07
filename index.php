@@ -17,6 +17,7 @@
 	// Get system classes
 	require_once( APP_ROOT . '/system/view.php' );
 	require_once( APP_ROOT . '/system/controller.php' );
+	require_once( APP_ROOT . '/system/uri.php' );
 
 	// Parse URI
 	if( false === strpos( $_SERVER['REQUEST_URI'], $config['uri_prefix'] ) )
