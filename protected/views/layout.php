@@ -11,11 +11,19 @@
 		<?php endif; ?>
 	</head>
 	<body>
-		<?php if( isset( $flash ) ) : ?>
-			<div class="flash">
-				<?php echo $flash; ?>
-			</div>
-		<?php endif; ?>
-		<?php echo $content; ?>
+		<div id="header">
+			<a href="<?php echo uri::path( '' ); ?>">Home</a> | 
+			<a href="<?php echo uri::path( 'page/about' ); ?>">About</a> |
+			<a href="<?php echo uri::path( 'list/create' ); ?>">Create</a> |
+			<a href="http://github.com/jmhobbs/MkLst" target="_blank">GitHub</a>
+		</div>
+		<div id="core">
+			<?php if( isset( $flash ) ) : ?>
+				<div class="flash">
+					<?php echo $flash; ?>
+				</div>
+			<?php endif; ?>
+			<?php echo $content; ?>
+		</div>
 	</body>
 </html>
