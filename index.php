@@ -1,6 +1,21 @@
 <?php
-	require_once( 'protected/config.php' );
-	require_once( 'protected/system/database.php' );
+	define( 'APP_ROOT', dirname( __FILE__ ) . '/protected' );
+
+	// Get CoughPHP
+	require_once( APP_ROOT . '/vendor/coughphp/load.inc.php' );
+	require_once( APP_ROOT . '/vendor/coughphp/as_database/load.inc.php' );
+	require_once( APP_ROOT . '/vendor/coughphp/extras/Autoloader.class.php');
+	Autoloader::addClassPath( APP_ROOT . '/models/' );
+	Autoloader::setCacheFilePath( APP_ROOT . '/cache/cough_class_path_cache.txt');
+	spl_autoload_register( array( 'Autoloader', 'loadClass' ) );
+
+	// Get config stuff
+	require_once( APP_ROOT . '/config/config.php' );
+	require_once( APP_ROOT . '/config/database.php' );
+
+	// Get system classes
+	require_once( APP_ROOT . '/system/view.php' );
+	require_once( APP_ROOT . '/system/controller.php' );
 
 	// Parse URI
 	if( false === strpos( $_SERVER['REQUEST_URI'], $config['uri_prefix'] ) )
@@ -21,7 +36,7 @@
 	if( 2 <= count( $components ) ) { $method_name = strtolower( $components[1] ); }
 	if( 3 <= count( $components ) ) { $arguments = array_slice( $components, 2 ); }
 
-	$controller_file = 'protected/controllers/' . $controller_name . '.php';
+	$controller_file = APP_ROOT . '/controllers/' . $controller_name . '.php';
 	$controller_class =  $controller_name . '_Controller';
 
 	if( ! file_exists( $controller_file ) )
@@ -34,8 +49,10 @@
 
 	$controller_obj = new $controller_class();
 
-	if( ! method_exists( $controller_obj, $method_name ) )
+	if( ! is_callable( array( $controller_obj, $method_name ) ) )
 		die( "Bad Method for $controller_name: $method_name" );
 
 	if( false === call_user_func_array( array( &$controller_obj, $method_name ), $arguments ) )
 		die( "Error Calling Method for $controller_name: $method_name" );
+		
+	die( $controller_obj->render() );

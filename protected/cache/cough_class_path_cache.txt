@@ -1,0 +1,1 @@
+a:2:{s:5:"Block";s:66:"/var/www/localhost/mklst/protected/models/concrete/Block.class.php";s:15:"Block_Generated";s:77:"/var/www/localhost/mklst/protected/models/generated/Block_Generated.class.php";}
