@@ -3,6 +3,12 @@
 
 	class List_Controller extends Application_Controller {
 		
+		public function __construct () {
+			parent::__construct();
+			if( ! isset( $_SESSION['can_edit'] ) || ! is_array( $_SESSION['can_edit'] ) )
+				$_SESSION['can_edit'] = array();
+		}
+		
 		public function index () { header( 'Location: /mklst/' ); exit(); }
 		
 		public function view ( $id, $try_edit = false ) {
@@ -14,20 +20,33 @@
 			}
 			
 			$view = new View( 'list/view' );
-			$view->alist = $list;
 			
 			if( $try_edit ) {
 				$password = $list->getPassphrase();
-				if( ! empty( $password ) && $_SESSION['can_edit'] != $id ) {
+				if( ! empty( $password ) && ! array_key_exists( $id, $_SESSION['can_edit'] ) ) {
 					header( 'Location: /mklst/list/password/' . $id );
 					exit();
 				}
 				else {
 					$this->view->edit = true;
 					$view->edit = true;
+					if( $_POST ) {
+						$items = explode( '|', $_POST['list-value'] );
+						for( $i = 0; $i < count( $items ); ++$i )
+							if( empty( $items[$i] ) )
+								unset( $items[$i] );
+							else
+								$items[$i] = urldecode( $items[$i] );
+						$list->setList( serialize( $items ) );
+						if( $list->save() )
+							$this->view->flash = "Saved";
+						else
+							$this->view->flash = "Not Saved!";
+					}
 				}
 			}
 			
+			$view->alist = $list;
 			$this->view->content = $view;
 		}
 		
@@ -48,7 +67,7 @@
 					$list->setModified( $now );
 					$list->setList( serialize( array() )  );
 					if( $list->save() ) {
-						$_SESSION['can_edit'] = $list->getId();
+						$_SESSION['can_edit'][$list->getId()] = true;
 						header( 'Location: /mklst/list/edit/' . $list->getId() );
 						exit();
 					}
@@ -74,9 +93,14 @@
 				return;
 			}
 		
+			if( array_key_exists( $id, $_SESSION['can_edit'] ) ) {
+				header( 'Location: /mklst/list/edit/' . $id );
+				exit();
+			}
+		
 			if( $_POST ) {
 				if( $_POST['password'] == $list->getPassphrase() ) {
-					$_SESSION['can_edit'] = $list->getId();
+					$_SESSION['can_edit'][$list->getId()] = true;
 					header( 'Location: /mklst/list/edit/' . $id );
 					exit();
 				}
