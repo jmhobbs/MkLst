@@ -1,0 +1,5 @@
+<?php
+	$config = array();
+	$config['uri_prefix'] = '/';
+	$config['default_controller'] = 'page';
+	$config['list_salt'] = 'mklst';
