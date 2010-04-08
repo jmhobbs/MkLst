@@ -1,6 +1,9 @@
 h1 {
 	border-bottom: 2px solid #CCC;
 }
+h2, h3 {
+	border-bottom: 1px solid #CCC;
+}
 ol {
 	margin: 25px 20px;
 	padding: 10px;
