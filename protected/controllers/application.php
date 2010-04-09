@@ -7,6 +7,10 @@
 		public function __construct () {
 			$this->view = new View( $this->view );
 			$this->view->title = "MkLst";
+			if( isset( $_SESSION['flash'] ) ) {
+				$this->view->flash = $_SESSION['flash'];
+				unset( $_SESSION['flash'] );
+			}
 		}
 
 		public function render () {
