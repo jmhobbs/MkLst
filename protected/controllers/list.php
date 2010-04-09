@@ -24,7 +24,7 @@
 			$view = new View( 'list/view' );
 			
 			if( $try_edit ) {
-				$password = $list->getPassphrase();
+				$password = $list->getEditPassword();
 				if( ! empty( $password ) && ! array_key_exists( $id, $_SESSION['can_edit'] ) ) {
 					uri::redirect( 'list/password/' . $id );
 				}
@@ -62,7 +62,9 @@
 					$list->setId( sha1( $_REQUEST['REMOTE_ADDR'] . time() . $_POST['name'] . $config['list_salt'] ) );
 					$list->setName( $_POST['name'] );
 					$list->setEmail( $_POST['email'] );
-					$list->setPassphrase( $_POST['password'] );
+					$list->setViewPassword( $_POST['view_password'] );
+					$list->setEditPassword( $_POST['edit_password'] );
+					$list->setDeletePassword( $_POST['delete_password'] );
 					$now = date('YmdHis' );
 					$list->setCreated( $now );
 					$list->setModified( $now );
@@ -84,6 +86,39 @@
 			$this->view( $id, true );
 		}
 		
+		public function delete ( $id ) {
+			$list = Alist::constructByKey( $id );
+			if ( ! is_object( $list ) ) {
+				$this->view->content = new View( 'list/missing' );
+				//! \todo Ban counter
+				return;
+			}
+			
+			# $_POST doesn't work here, as it can be posted but be totally empty
+			if( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
+				if( ! isset( $_POST['yesimsure'] ) or 'yes' != $_POST['yesimsure'] ) {
+					$this->view->flash = 'You must confirm the deletion!';
+				}
+				else {
+					if( '' == $list->getDeletePassword() or $_POST['password'] == $list->getDeletePassword() ) {
+						if( $list->delete() ) {
+							$_SESSION['flash'] = 'Poof! It\'s gone!';
+							uri::redirect( '' );
+						}
+						else {
+							$this->view->flash = 'Database error while deleting. Try again?';
+						}
+					}
+					else {
+						$this->view->flash = 'Incorrect delete password.';
+					}
+				}
+			}
+			
+			$this->view->content = new View( 'list/delete' );
+			$this->view->content->is_protected = ( '' != $list->getDeletePassword() );
+		}
+		
 		public function password ( $id ) {
 		
 			$list = Alist::constructByKey( $id );
@@ -98,7 +133,7 @@
 			}
 		
 			if( $_POST ) {
-				if( $_POST['password'] == $list->getPassphrase() ) {
+				if( $_POST['password'] == $list->getEditPassword() ) {
 					$_SESSION['can_edit'][$list->getId()] = true;
 					uri::redirect( 'list/edit/' . $id );
 				}

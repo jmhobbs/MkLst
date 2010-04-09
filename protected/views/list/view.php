@@ -5,6 +5,7 @@
 	<?php else: ?>
 	<span class="context-link">(<a href="<?php echo uri::path( 'list/view/' . $alist->getId() ); ?>">View</a>)</span>
 	<?php endif; ?>
+	<span class="context-link">(<a href="<?php echo uri::path( 'list/delete/' . $alist->getId() ); ?>">Delete</a>)</span>
 </h1>
 
 <?php if( $edit ): ?>
