@@ -1,8 +1,0 @@
-# Framework
-Controller autoloader
-
-# Application
-Edit page - edit name of list
-Delete list (with edit privileges?)
-Password protected viewing
-Edit page - unfocused "n" creates a new list item
