@@ -4,11 +4,11 @@ h1 {
 h2, h3 {
 	border-bottom: 1px solid #CCC;
 }
-ol {
+ol#list {
 	margin: 25px 20px;
 	padding: 10px;
 }
-li {
+li.list-item {
 	border-bottom: 1px solid #CCC;
 	padding: 5px 3px;
 	margin: 2px;

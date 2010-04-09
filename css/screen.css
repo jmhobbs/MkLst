@@ -24,8 +24,8 @@ input {
 
 .flash {
 	padding: 10px;
-	border: 1px solid #000;
-	background-color: #CCC;
+	border: 1px solid #D4D400;
+	background-color: #FFFF8F;
 }
 
 li.ui-sortable-helper {
@@ -64,4 +64,7 @@ li.active {
 }
 #header a:hover {
 	color: #AAA;
+}
+li {
+	padding: 5px 3px;
 }
