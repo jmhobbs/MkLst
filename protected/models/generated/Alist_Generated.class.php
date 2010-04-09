@@ -16,7 +16,9 @@ abstract class Alist_Generated extends CoughObject {
 		'id' => null,
 		'name' => null,
 		'email' => null,
-		'passphrase' => null,
+		'edit_password' => null,
+		'view_password' => null,
+		'delete_password' => null,
 		'list' => null,
 		'created' => null,
 		'modified' => null,
@@ -38,8 +40,18 @@ abstract class Alist_Generated extends CoughObject {
 			'is_null_allowed' => false,
 			'default_value' => null
 		),
-		'passphrase' => array(
-			'db_column_name' => 'passphrase',
+		'edit_password' => array(
+			'db_column_name' => 'edit_password',
+			'is_null_allowed' => false,
+			'default_value' => null
+		),
+		'view_password' => array(
+			'db_column_name' => 'view_password',
+			'is_null_allowed' => false,
+			'default_value' => null
+		),
+		'delete_password' => array(
+			'db_column_name' => 'delete_password',
 			'is_null_allowed' => false,
 			'default_value' => null
 		),
@@ -161,12 +173,28 @@ abstract class Alist_Generated extends CoughObject {
 		$this->setField('email', $value);
 	}
 	
-	public function getPassphrase() {
-		return $this->getField('passphrase');
+	public function getEditPassword() {
+		return $this->getField('edit_password');
 	}
 	
-	public function setPassphrase($value) {
-		$this->setField('passphrase', $value);
+	public function setEditPassword($value) {
+		$this->setField('edit_password', $value);
+	}
+	
+	public function getViewPassword() {
+		return $this->getField('view_password');
+	}
+	
+	public function setViewPassword($value) {
+		$this->setField('view_password', $value);
+	}
+	
+	public function getDeletePassword() {
+		return $this->getField('delete_password');
+	}
+	
+	public function setDeletePassword($value) {
+		$this->setField('delete_password', $value);
 	}
 	
 	public function getList() {
