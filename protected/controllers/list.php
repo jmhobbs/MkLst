@@ -7,6 +7,8 @@
 			parent::__construct();
 			if( ! isset( $_SESSION['can_edit'] ) || ! is_array( $_SESSION['can_edit'] ) )
 				$_SESSION['can_edit'] = array();
+			if( ! isset( $_SESSION['can_view'] ) || ! is_array( $_SESSION['can_view'] ) )
+				$_SESSION['can_view'] = array();
 		}
 		
 		public function index () { uri::redirect( '' ); }
@@ -26,7 +28,7 @@
 			if( $try_edit ) {
 				$password = $list->getEditPassword();
 				if( ! empty( $password ) && ! array_key_exists( $id, $_SESSION['can_edit'] ) ) {
-					uri::redirect( 'list/password/' . $id );
+					uri::redirect( 'list/password/edit/' . $id );
 				}
 				else {
 					$this->view->edit = true;
@@ -44,6 +46,11 @@
 						else
 							$this->view->flash = "Not Saved!";
 					}
+				}
+			}
+			else {
+				if( '' != $list->getViewPassword() && ! array_key_exists( $id, $_SESSION['can_view'] ) ) {
+					uri::redirect( 'list/password/view/' . $id );
 				}
 			}
 			
@@ -70,6 +77,7 @@
 					$list->setModified( $now );
 					$list->setList( serialize( array() )  );
 					if( $list->save() ) {
+						$_SESSION['flash'] = 'List created!';
 						$_SESSION['can_edit'][$list->getId()] = true;
 						uri::redirect( 'list/edit/' . $list->getId() );
 					}
@@ -119,7 +127,12 @@
 			$this->view->content->is_protected = ( '' != $list->getDeletePassword() );
 		}
 		
-		public function password ( $id ) {
+		public function password ( $type, $id ) {
+		
+			if( $type != "edit" and $type != "view" ) {
+				$_SESSION['flash'] = 'Unknown password type "' . htmlspecialchars( $type ) . '".';
+				uri::redirect( 'list/view/' . $id );
+			}
 		
 			$list = Alist::constructByKey( $id );
 			if ( ! is_object( $list ) ) {
@@ -127,21 +140,45 @@
 				//! \todo Ban counter
 				return;
 			}
-		
-			if( array_key_exists( $id, $_SESSION['can_edit'] ) ) {
-				uri::redirect( 'list/edit/' . $id );
-			}
-		
-			if( $_POST ) {
-				if( $_POST['password'] == $list->getEditPassword() ) {
-					$_SESSION['can_edit'][$list->getId()] = true;
+			
+			if( 'edit' == $type ) {
+
+				if( '' == $list->getEditPassword() or array_key_exists( $id, $_SESSION['can_edit'] ) ) {
 					uri::redirect( 'list/edit/' . $id );
 				}
-				else {
-					$this->view->flash = 'Sorry, that\'s not the password.';
-					//! \todo Ban counter
+			
+				if( $_POST ) {
+					if( $_POST['password'] == $list->getEditPassword() ) {
+						$_SESSION['can_edit'][$list->getId()] = true;
+						uri::redirect( 'list/edit/' . $id );
+					}
+					else {
+						$this->view->flash = 'Sorry, that\'s not the password.';
+						//! \todo Ban counter
+					}
 				}
+
 			}
+			else {
+
+				if( '' == $list->getViewPassword() or array_key_exists( $id, $_SESSION['can_view'] ) ) {
+					uri::redirect( 'list/view/' . $id );
+				}
+			
+				if( $_POST ) {
+					if( $_POST['password'] == $list->getViewPassword() ) {
+						$_SESSION['can_view'][$list->getId()] = true;
+						uri::redirect( 'list/view/' . $id );
+					}
+					else {
+						$this->view->flash = 'Sorry, that\'s not the password.';
+						//! \todo Ban counter
+					}
+				}
+
+			}
+			
 			$this->view->content = new View( 'list/password' );
+			$this->view->content->type = ucwords( $type );
 		}
 	}
