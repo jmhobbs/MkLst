@@ -35,11 +35,15 @@
 					$view->edit = true;
 					if( $_POST ) {
 						$items = explode( '|', $_POST['list-value'] );
-						for( $i = 0; $i < count( $items ); ++$i )
+						for( $i = 1; $i < count( $items ); ++$i )
 							if( empty( $items[$i] ) )
 								unset( $items[$i] );
 							else
 								$items[$i] = urldecode( $items[$i] );
+						if( empty( $items[0] ) )
+							$items[0] = "You can't leave the list name empty.";
+						$list->setName( $items[0] );
+						unset( $items[0] );
 						$list->setList( serialize( $items ) );
 						if( $list->save() )
 							$this->view->flash = "Saved";

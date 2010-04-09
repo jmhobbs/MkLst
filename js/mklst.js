@@ -18,6 +18,7 @@ var MkLst = {
 			MkLst.list.sortable( { start: function () { MkLst.sorting = true; } } );
 			$( ".add" ).click( MkLst.createListItem );
 			$( ".list-item" ).click( MkLst.editListItem );
+			$( "#name" ).click( MkLst.editName );
 			$( ".save" ).click( MkLst.saveList );
 			$( document ).keypress( MkLst.documentKeyPress );
 		},
@@ -26,6 +27,27 @@ var MkLst = {
 		function ( event )  {
 			if( MkLst.edit_current != null ) { return; }
 			if( event.charCode == '110' ) { MkLst.createListItem(); }
+		},
+
+	editName:
+		function () {
+			if( MkLst.edit_current != null ) { MkLst.edit_current.trigger( 'blur' ); }
+			MkLst.edit_current = $( '<input type="text" />' );
+			span = $( this )
+			MkLst.edit_current.val( span.text() )
+			span.addClass( 'active' ).empty().append( MkLst.edit_current ).unbind( 'click' );
+			MkLst.edit_current.focus().blur( MkLst.saveName ).keypress( MkLst.editKeyPress );
+		},
+
+	saveName:
+		function () {
+			if( MkLst.edit_current == null ) { return; }
+			content = MkLst.edit_current.val()
+			if( content == "" ) {
+				content = "You can't leave the list name empty.";
+			}
+			MkLst.edit_current.parent().removeClass( 'active' ).empty().text( content ).click( MkLst.editName );
+			MkLst.edit_current = null
 		},
 
 	editListItem:
@@ -72,7 +94,7 @@ var MkLst = {
 			form = $( '#edit-form' );
 			list = $( '#list-value' );
 			items = $( '.list-item' );
-			send = '';
+			send = $( '#name' ).text() + '|';
 			for( i = 0; i < items.length; ++i )
 				send = send + escape( $(items[i]).text() ) + '|';
 			list.val( send );
