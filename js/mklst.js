@@ -19,6 +19,13 @@ var MkLst = {
 			$( ".add" ).click( MkLst.createListItem );
 			$( ".list-item" ).click( MkLst.editListItem );
 			$( ".save" ).click( MkLst.saveList );
+			$( document ).keypress( MkLst.documentKeyPress );
+		},
+		
+	documentKeyPress:
+		function ( event )  {
+			if( MkLst.edit_current != null ) { return; }
+			if( event.charCode == '110' ) { MkLst.createListItem(); }
 		},
 
 	editListItem:
