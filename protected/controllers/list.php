@@ -53,7 +53,7 @@
 				}
 			}
 			else {
-				if( '' != $list->getViewPassword() && ! array_key_exists( $id, $_SESSION['can_view'] ) ) {
+				if( '' != $list->getViewPassword() && ! array_key_exists( $id, $_SESSION['can_view'] ) && ! array_key_exists( $id, $_SESSION['can_edit'] ) ) {
 					uri::redirect( 'list/password/view/' . $id );
 				}
 			}
