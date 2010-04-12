@@ -57,7 +57,12 @@ var MkLst = {
 			MkLst.saved = false;
 			MkLst.edit_current = $( '<input type="text" />' );
 			li = $( this )
-			MkLst.edit_current.val( li.text() )
+			content = li.text()
+			if( li.hasClass( 'strikethrough' ) ) {
+				li.removeClass( 'strikethrough' );
+				content = '-' + content;
+			}
+			MkLst.edit_current.val( content );
 			li.addClass( 'active' ).empty().append( MkLst.edit_current ).unbind( 'click' );
 			MkLst.edit_current.focus().blur( MkLst.saveListItem ).keypress( MkLst.editKeyPress );
 		},
@@ -75,8 +80,13 @@ var MkLst = {
 			content = MkLst.edit_current.val()
 			if( content == "" )
 				MkLst.edit_current.parent().remove();
-			else
+			else {
+				if( '-' == content.substr( 0, 1 ) ) {
+					content = content.substr( 1 );
+					MkLst.edit_current.parent().addClass( 'strikethrough' );
+				}
 				MkLst.edit_current.parent().removeClass( 'active' ).empty().text( content ).click( MkLst.editListItem );
+			}
 			MkLst.edit_current = null
 		},
 
@@ -95,8 +105,12 @@ var MkLst = {
 			list = $( '#list-value' );
 			items = $( '.list-item' );
 			send = $( '#name' ).text() + '|';
-			for( i = 0; i < items.length; ++i )
-				send = send + escape( $(items[i]).text() ) + '|';
+			for( i = 0; i < items.length; ++i ) {
+				content = $(items[i]).text();
+				if( $(items[i]).hasClass( 'strikethrough' ) )
+					content = '-' + content;
+				send = send + escape( content ) + '|';
+			}
 			list.val( send );
 			form.submit();
 		},

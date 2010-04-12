@@ -19,8 +19,13 @@
 	<?php
 		$items = unserialize( $alist->getList() );
 		foreach( $items as $item ):
+			$class = 'list-item';
+			if( '-' == substr( $item, 0, 1 ) ) {
+				$class .= ' strikethrough';
+				$item = substr( $item, 1 );
+			}
 	?>
-		<li class="list-item"><?php echo $item; ?></li>
+		<li class="<?php echo $class; ?>"><?php echo $item; ?></li>
 	<?php endforeach; ?>
 </ol>
 

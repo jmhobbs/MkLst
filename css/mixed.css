@@ -14,3 +14,6 @@ li.list-item {
 	margin: 2px;
 	cursor: pointer;
 }
+li.strikethrough {
+	text-decoration: line-through;
+}
