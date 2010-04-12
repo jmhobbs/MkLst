@@ -129,6 +129,7 @@
 			
 			$this->view->content = new View( 'list/delete' );
 			$this->view->content->is_protected = ( '' != $list->getDeletePassword() );
+			$this->view->content->id = $id;
 		}
 		
 		public function password ( $type, $id ) {

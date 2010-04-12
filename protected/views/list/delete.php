@@ -21,5 +21,5 @@
 	<input type="checkbox" value="yes" name="yesimsure" id="yesimsure" />
 	<br/>
 	
-	<input type="submit" value="Delete List" class="label-offset" />
+	<input type="submit" value="Delete List" class="label-offset" /> or  <a href="<?php echo uri::path( 'list/view/' . $id  ); ?>">Cancel</a>
 </form>
