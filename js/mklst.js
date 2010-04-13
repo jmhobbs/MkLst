@@ -8,8 +8,7 @@ var MkLst = {
 	init:
 		function () {
 			window.onbeforeunload = function () {
-				if( ! MkList.saved ) {
-					MkLst.save_pending = true;
+				if( ! MkLst.saved ) {
 					return "Your list has unsaved changes!";
 				}
 				return true;
@@ -32,6 +31,7 @@ var MkLst = {
 	editName:
 		function () {
 			if( MkLst.edit_current != null ) { MkLst.edit_current.trigger( 'blur' ); }
+			MkLst.saved = false;
 			MkLst.edit_current = $( '<input type="text" />' );
 			span = $( this )
 			MkLst.edit_current.val( span.text() )
