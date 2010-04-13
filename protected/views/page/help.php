@@ -4,6 +4,18 @@
 	MkLst is a simple application with only a few core concepts. You should be a master list Mkr in no time.
 </p>
 
+<p>
+	<b>Topics</b>
+	<ul>
+		<li><a href="#create">Creating A List</a></li>
+		<li><a href="#edit">Editing A List</a></li>
+		<li><a href="#bugs">Reporting Bugs &amp; Requesting Features</a></li>
+	</ul>
+</p>
+
+<hr/>
+
+<a name="create"></a>
 <h2>Creating A List</h2>
 
 <p>
@@ -32,6 +44,9 @@
   Please note that it's not really very "dangerous" not to set passwords on your lists unless you are publishing the link somewhere.  List ID's are very large and unpredictable, so they aren't going to be guessed somehow. Additionally, anyone who goes trolling for list ID's and guesses too many wrong gets locked out of the system. For good. Consider this your warning.
 </p>
 
+<hr/>
+
+<a name="edit"></a>
 <h2>Editing A List</h2>
 
 <h3>Inserting Items</h3>
@@ -63,4 +78,13 @@
 	<img src="<?php echo uri::path( 'img/help/strikethrough-item-1.png' ); ?>" /><br/>
 	Click on the item to edit it. Add a single dash "-" to the very front of the item. Hit "enter" to save."<br/>
 	<img src="<?php echo uri::path( 'img/help/strikethrough-item-2.png' ); ?>" /><br/>
+</p>
+
+<hr/>
+
+<a name="bugs"></a>
+<h2>Reporting Bugs &amp; Requesting Features</h2>
+
+<p>
+	All version control and issue management is done via <a href="http://github.com/jmhobbs/MkLst">our GitHub page</a>.
 </p>
