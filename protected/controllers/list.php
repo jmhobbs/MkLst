@@ -45,6 +45,7 @@
 						$list->setName( $items[0] );
 						unset( $items[0] );
 						$list->setList( serialize( $items ) );
+						$list->setModified( date('YmdHis' ) );
 						if( $list->save() )
 							$this->view->flash = "Saved";
 						else
