@@ -16,6 +16,7 @@ This is regularly tested on Firefox 3 & Google Chrome
 
 ORM provided by CoughPHP - FreeBSD License
 JavaScript Awesomeness by jQuery - MIT License
+E-Mail by SwiftMailer - GPL v3
 
 # License
 

@@ -8,6 +8,7 @@
 
 <p>ORM provided by CoughPHP - FreeBSD License</p>
 <p>JavaScript awesomeness by jQuery - MIT License</p>
+<p>E-Mail by SwiftMailer - GPL v3</p>
 <p>Everything else is written by me, John Hobbs of <a href="http://www.littlefilament.com/" target="_blank">Little Filament</a>.</p>
 
 <h1>Yes, it's open source.</h1>
