@@ -11,7 +11,6 @@ var MkLst = {
 				if( ! MkLst.saved ) {
 					return "Your list has unsaved changes!";
 				}
-				return true;
 			}
 			MkLst.list = $( "#list" );
 			MkLst.list.sortable( { start: function () { MkLst.sorting = true; } } );
@@ -101,6 +100,7 @@ var MkLst = {
 		function () {
 			$( '.save,.add' ).attr( 'disabled', 'disabled' )
 			if( MkLst.edit_current != null ) { MkLst.edit_current.trigger( 'blur' ); }
+			MkLst.saved = true;
 			form = $( '#edit-form' );
 			list = $( '#list-value' );
 			items = $( '.list-item' );
