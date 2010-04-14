@@ -12,6 +12,7 @@
 
 	// Get config stuff
 	require_once( APP_ROOT . '/config/config.php' );
+	require_once( APP_ROOT . '/config/routes.php' );
 	require_once( APP_ROOT . '/config/database.php' );
 
 	// Get system classes
@@ -37,6 +38,14 @@
 	if( 1 <= count( $components ) ) { $controller_name = strtolower( $components[0] ); }
 	if( 2 <= count( $components ) ) { $method_name = strtolower( $components[1] ); }
 	if( 3 <= count( $components ) ) { $arguments = array_slice( $components, 2 ); }
+
+	// Routing...
+	if( array_key_exists( $controller_name, $routes ) && array_key_exists( $method_name, $routes[$controller_name] ) ) {
+		$n_controller_name = $routes[$controller_name][$method_name][0];
+		$n_method_name = $routes[$controller_name][$method_name][1];
+		$controller_name = $n_controller_name;
+		$method_name = $n_method_name;
+	}
 
 	$controller_file = APP_ROOT . '/controllers/' . $controller_name . '.php';
 	$controller_class =  $controller_name . '_Controller';
