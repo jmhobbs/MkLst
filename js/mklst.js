@@ -13,7 +13,8 @@ var MkLst = {
 				}
 			}
 			MkLst.list = $( "#list" );
-			MkLst.list.sortable( { start: function () { MkLst.sorting = true; } } );
+			$( ".trash" ).sortable( { cancel: '.ignore',  receive: function( event, ui ) { ui.item.remove(); MkLst.sorting = false; MkLst.saved = false; } } );
+			MkLst.list.sortable( { start: function () { MkLst.sorting = true; }, connectWith: '.trash' } );
 			$( ".add" ).click( MkLst.createListItem );
 			$( ".list-item" ).click( MkLst.editListItem );
 			$( "#name" ).click( MkLst.editName );

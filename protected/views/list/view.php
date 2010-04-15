@@ -12,6 +12,7 @@
 <div class="buttons">
 	<button class="add">Add Item +</button>
 	<button class="save">Save</button>
+	<ul class="trash"><li class="ignore">Trash</li></ul>
 </div>
 <?php endif; ?>
 
@@ -33,6 +34,7 @@
 <div class="buttons">
 	<button class="add">Add Item +</button>
 	<button class="save">Save</button>
+	<ul class="trash"><li class="ignore">Trash</li></ul>
 </div>
 
 <form id="edit-form" method="POST"><input type="hidden" name="list-value" id="list-value" value="" /></form>
